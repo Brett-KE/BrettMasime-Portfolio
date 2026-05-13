@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brett Masime | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --card: #111820;
+    --border: #1e2d3d;
+    --accent1: #00d4ff;
+    --accent2: #00ff88;
+    --accent3: #ff6b35;
+    --text: #e8edf2;
+    --muted: #6b8097;
+    --white: #ffffff;
+    --grad1: linear-gradient(135deg, #00d4ff, #00ff88);
+    --grad2: linear-gradient(135deg, #00ff88, #00d4ff);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: .4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── GRID LINES ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2rem;
+    background: rgba(8,12,16,.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -.02em;
+  }
+
+  .nav-logo span { color: var(--accent1); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: .75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+
+  .nav-links a:hover { color: var(--accent1); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--text);
+    transition: all .3s;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  section:first-of-type { padding-top: 8rem; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 2rem; height: 1px;
+    background: var(--accent2);
+  }
+
+  h1, h2, h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 540px;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 7rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: .75rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1.5rem;
+    animation: fadeUp .6s ease both;
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 9vw, 6rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -.03em;
+    animation: fadeUp .6s .1s ease both;
+  }
+
+  .hero-name span {
+    background: var(--grad1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(.75rem, 2vw, .95rem);
+    color: var(--muted);
+    margin-top: 1.2rem;
+    letter-spacing: .04em;
+    animation: fadeUp .6s .2s ease both;
+    max-width: 680px;
+  }
+
+  .hero-tagline {
+    margin-top: 1.4rem;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text);
+    max-width: 580px;
+    font-weight: 300;
+    animation: fadeUp .6s .3s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    animation: fadeUp .6s .4s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .85rem 1.8rem;
+    border-radius: 3px;
+    font-family: 'Space Mono', monospace;
+    font-size: .8rem;
+    letter-spacing: .06em;
+    text-decoration: none;
+    transition: all .25s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--grad1);
+    color: #000;
+    font-weight: 700;
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,212,255,.35); }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: transparent;
+  }
+
+  .btn-outline:hover { border-color: var(--accent1); color: var(--accent1); transform: translateY(-2px); }
+
+  .hero-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 4rem;
+    animation: fadeUp .6s .5s ease both;
+  }
+
+  .hero-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem;
+    transition: border-color .25s, transform .25s;
+  }
+
+  .hero-card:hover { border-color: var(--accent1); transform: translateY(-3px); }
+
+  .hero-card-icon { font-size: 1.6rem; margin-bottom: .6rem; }
+
+  .hero-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: .95rem;
+    color: var(--white);
+    margin-bottom: .3rem;
+  }
+
+  .hero-card p {
+    font-size: .8rem;
+    color: var(--muted);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-avatar {
+    position: relative;
+  }
+
+  .avatar-box {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 320px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+/* image styling */
+.avatar-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+  .about-tag {
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    background: var(--accent2);
+    color: #000;
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    font-weight: 700;
+    padding: .4rem .8rem;
+    letter-spacing: .1em;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-size: .95rem;
+    line-height: 1.8;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+  }
+
+  .focus-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .8rem;
+    margin-top: 2.5rem;
+  }
+
+  .focus-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: border-color .2s;
+  }
+
+  .focus-item:hover { border-color: var(--accent1); }
+
+  .focus-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    background: rgba(0,212,255,.08);
+    flex-shrink: 0;
+  }
+
+  .focus-item h5 {
+    font-family: 'Syne', sans-serif;
+    font-size: .9rem;
+    color: var(--white);
+    margin-bottom: .2rem;
+  }
+
+  .focus-item p { font-size: .78rem; color: var(--muted); }
+
+  .looking-for {
+    margin-top: 2.5rem;
+  }
+
+  .looking-for h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .tag {
+    background: rgba(0,212,255,.08);
+    border: 1px solid rgba(0,212,255,.2);
+    color: var(--accent1);
+    padding: .3rem .8rem;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .05em;
+  }
+
+  .tag.green {
+    background: rgba(0,255,136,.08);
+    border-color: rgba(0,255,136,.2);
+    color: var(--accent2);
+  }
+
+  /* ── PROJECTS ── */
+  .project-category {
+    margin-bottom: 4rem;
+  }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-icon { font-size: 1.4rem; }
+
+  .cat-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    color: var(--white);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .proj-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+  }
+
+  .proj-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent1);
+    box-shadow: 0 12px 32px rgba(0,0,0,.4);
+  }
+
+  .proj-thumb {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proj-thumb.data { background: linear-gradient(135deg, #0d1f2d, #0a2a1a); }
+  .proj-thumb.solar { background: linear-gradient(135deg, #1a1200, #2a1800); }
+  .proj-thumb.auto { background: linear-gradient(135deg, #100d20, #0d1a2d); }
+
+  .proj-thumb-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .proj-thumb-inner span { font-size: 2.5rem; }
+  .proj-thumb-inner p {
+    font-family: 'Space Mono', monospace;
+    font-size: .6rem;
+    color: var(--muted);
+    margin-top: .3rem;
+    letter-spacing: .1em;
+  }
+
+  .proj-body { padding: 1.4rem; }
+
+  .proj-body h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: .5rem;
+  }
+
+  .proj-problem {
+    font-size: .8rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .proj-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .tool-badge {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: .2rem .55rem;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    font-size: .63rem;
+    letter-spacing: .04em;
+  }
+
+  .proj-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: .72rem;
+    color: var(--accent1);
+    text-decoration: none;
+    letter-spacing: .05em;
+    transition: gap .2s;
+  }
+
+  .proj-link:hover { gap: .7rem; }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.6rem;
+    transition: border-color .25s;
+  }
+
+  .skill-group:hover { border-color: var(--accent1); }
+
+  .skill-group-head {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-group-head span { font-size: 1.2rem; }
+
+  .skill-group-head h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: .95rem;
+    color: var(--white);
+  }
+
+  .skill-list { list-style: none; }
+
+  .skill-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .55rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .83rem;
+    color: var(--text);
+  }
+
+  .skill-list li:last-child { border-bottom: none; }
+
+  .skill-bar-wrap {
+    width: 80px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-bar {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--grad1);
+    transition: width 1.2s ease;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .exp-col h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    padding-bottom: .8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: .4rem;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    box-shadow: 0 0 8px var(--accent2);
+  }
+
+  .exp-item::after {
+    content: '';
+    position: absolute;
+    left: 2.5px; top: 1.2rem;
+    width: 1px;
+    height: calc(100% - .6rem);
+    background: var(--border);
+  }
+
+  .exp-item:last-child::after { display: none; }
+
+  .exp-date {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    color: var(--accent2);
+    letter-spacing: .1em;
+    margin-bottom: .3rem;
+  }
+
+  .exp-item h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: .95rem;
+    color: var(--white);
+    margin-bottom: .3rem;
+  }
+
+  .exp-item p {
+    font-size: .8rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── BLOG ── */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .blog-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.6rem;
+    transition: transform .25s, border-color .25s;
+    cursor: pointer;
+  }
+
+  .blog-card:hover { transform: translateY(-3px); border-color: var(--accent2); }
+
+  .blog-cat {
+    font-family: 'Space Mono', monospace;
+    font-size: .63rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: .8rem;
+  }
+
+  .blog-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    color: var(--white);
+    line-height: 1.4;
+    margin-bottom: .8rem;
+  }
+
+  .blog-card p { font-size: .8rem; color: var(--muted); line-height: 1.7; }
+
+  .blog-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .blog-meta span {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    color: var(--muted);
+  }
+
+  .blog-meta a {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    color: var(--accent2);
+    text-decoration: none;
+  }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .contact-left h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .contact-left h2 span {
+    background: var(--grad1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contact-left p {
+    color: var(--muted);
+    font-size: .95rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: border-color .2s, transform .2s;
+    color: var(--text);
+  }
+
+  .contact-link:hover { border-color: var(--accent1); transform: translateX(4px); }
+
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(0,212,255,.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-link-text h5 {
+    font-family: 'Syne', sans-serif;
+    font-size: .85rem;
+    color: var(--white);
+    margin-bottom: .1rem;
+  }
+
+  .contact-link-text span {
+    font-size: .78rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .contact-form-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2rem;
+  }
+
+  .form-row { margin-bottom: 1.2rem; }
+
+  .form-row label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: .75rem 1rem;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    outline: none;
+    transition: border-color .2s;
+    resize: none;
+  }
+
+  .form-row input:focus,
+  .form-row textarea:focus { border-color: var(--accent1); }
+
+  .form-row textarea { height: 110px; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2.5rem;
+    border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    color: var(--muted);
+    letter-spacing: .08em;
+  }
+
+  footer span { color: var(--accent1); }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .stat { text-align: left; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: var(--grad1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-top: .3rem;
+  }
+
+  /* ── MOBILE NAV MENU ── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,12,16,.97);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  .mobile-menu a:hover { color: var(--accent1); }
+
+  .close-btn {
+    position: absolute;
+    top: 1.5rem; right: 2rem;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── GLOW DOT ── */
+  .glow-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    box-shadow: 0 0 12px var(--accent2);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .about-grid { grid-template-columns: 1fr; }
+    .avatar-box { max-width: 200px; }
+    .exp-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    section { padding: 4rem 1.2rem; }
+    .hero-btns { flex-direction: column; }
+    .btn { text-align: center; justify-content: center; }
+    .stat-row { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">Brett<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" onclick="openMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="closeMenu()">✕</button>
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#experience" onclick="closeMenu()">Experience</a>
+  <a href="#blog" onclick="closeMenu()">Blog</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- ══════════════════════ HOME ══════════════════════ -->
+<section id="home">
+  <p class="hero-eyebrow"><span class="glow-dot"></span> &nbsp;Available for remote work </p>
+  <h1 class="hero-name">Brett<br><span>Masime</span></h1>
+  <p class="hero-title">Python Developer &nbsp;|&nbsp; Data Analyst &nbsp;|&nbsp; Solar & Electrical Technician &nbsp;|&nbsp; Technical Freelancer</p>
+  <p class="hero-tagline">I build data-driven solutions, solar energy systems, and automation tools that solve real-world problems.</p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn btn-primary">View Projects →</a>
+    <a href="https://drive.google.com/file/d/1p-0DPUQJNu1w-HNmgIGyck3_M0eCCTJE/view?usp=sharing" 
+      class="btn btn-outline" 
+      target="_blank">
+      ⬇ Download CV
+    </a>
+    <a href="#contact" class="btn btn-outline">Contact Me</a>
+  </div>
+  <div class="hero-cards">
+    <div class="hero-card">
+      <div class="hero-card-icon">📊</div>
+      <h4>Data Analysis</h4>
+      <p>Python · SQL · Excel · Tableau</p>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon">⚡</div>
+      <h4>Solar & Electrical Systems</h4>
+      <p>Design · Installation · Simulation</p>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon">🧠</div>
+      <h4>Automation & Technical Writing</h4>
+      <p>Scripts · Reports · Documentation</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════ ABOUT ══════════════════════ -->
+<section id="about">
+  <p class="section-label">About Me</p>
+  <div class="about-grid">
+    <div class="about-avatar">
+      <div class="avatar-box">
+        <img src="images/profile.jpg" alt="Brett Masime">
+      </div>
+      <div class="about-tag">KENYA 🇰🇪</div>
+    </div>
+    <div class="about-text fade-in">
+      <h2 class="section-title" style="margin-bottom:1.5rem;">Who I Am</h2>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Freelancing</div></div>
+        <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Projects Delivered</div></div>
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Core Disciplines</div></div>
+      </div>
+
+      <p>I'm a <strong>multi-disciplined technical professional</strong> based in Kenya, combining a background in electrical engineering with a growing expertise in data science and Python programming. I thrive at the intersection of physical systems and digital intelligence.</p>
+      <p>On the engineering side, I've designed and installed <strong>off-grid solar systems</strong>, conducted electrical load calculations, and worked on real installations across Kenya. I bring hands-on experience that bridges theory and practical deployment.</p>
+      <p>On the data side, I've built pipelines for data cleaning, created business dashboards, and automated repetitive workflows using Python. I'm actively expanding into AI/data annotation, remote freelance work, and energy-related consulting.</p>
+      <p>I'm also a contributor to the <strong>Excel Foundation CBO</strong>, where I help build internal systems, contribute to community programs, and provide technical leadership to local initiatives.</p>
+
+      <div class="focus-grid">
+        <div class="focus-item">
+          <div class="focus-icon">📊</div>
+          <div>
+            <h5>Data Analysis & Python Automation</h5>
+            <p>Cleaning messy datasets, building dashboards, scripting automation tools</p>
+          </div>
+        </div>
+        <div class="focus-item">
+          <div class="focus-icon">⚡</div>
+          <div>
+            <h5>Solar Energy System Design & Installations</h5>
+            <p>Off-grid PV systems, battery sizing, LTspice simulation, load calculations</p>
+          </div>
+        </div>
+        <div class="focus-item">
+          <div class="focus-icon">✍️</div>
+          <div>
+            <h5>Technical Writing & Reporting</h5>
+            <p>Clear, professional documentation for both technical and non-technical audiences</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="looking-for">
+        <h4>🚀 What I'm Looking For</h4>
+        <div class="tags">
+          <span class="tag">Remote Gigs</span>
+          <span class="tag">AI / Data Annotation</span>
+          <span class="tag green">Freelance Technical Projects</span>
+          <span class="tag green">Energy Consulting</span>
+          <span class="tag">Python Development</span>
+          <span class="tag">Data Analysis Contracts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════ PROJECTS ══════════════════════ -->
+<section id="projects">
+  <p class="section-label">Projects</p>
+  <h2 class="section-title">Selected Work</h2>
+  <p class="section-sub">Offering real-world solutions at the intersection of engineering and data.</p>
+
+  <!-- DATA PROJECTS -->
+  <div class="project-category fade-in">
+    <div class="cat-header">
+      <span class="cat-icon">📊</span>
+      <h3>Data & Analytics Projects</h3>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card">
+        <div class="proj-thumb data">
+          <div class="proj-thumb-inner"><span>🛒</span><p>MARKET BASKET</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>Market Basket Analysis</h4>
+          <p class="proj-problem">Identified hidden product associations from transaction data to help a small retailer improve product placement and promotions.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">Python</span>
+            <span class="tool-badge">Pandas</span>
+            <span class="tool-badge">mlxtend</span>
+            <span class="tool-badge">Matplotlib</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb data">
+          <div class="proj-thumb-inner"><span>📈</span><p>SALES DASHBOARD</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>Sales Dashboard (Tableau)</h4>
+          <p class="proj-problem">Built an interactive dashboard for a small business to track monthly sales trends, top products, and regional performance.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">Tableau</span>
+            <span class="tool-badge">Excel</span>
+            <span class="tool-badge">SQL</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb data">
+          <div class="proj-thumb-inner"><span>🧹</span><p>DATA PIPELINE</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>Data Cleaning Pipeline</h4>
+          <p class="proj-problem">Automated the preprocessing of messy CSV files — handling nulls, type errors, duplicates — reducing manual cleaning time by 80%.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">Python</span>
+            <span class="tool-badge">Pandas</span>
+            <span class="tool-badge">NumPy</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLAR PROJECTS -->
+  <div class="project-category fade-in">
+    <div class="cat-header">
+      <span class="cat-icon">⚡</span>
+      <h3>Solar / Engineering Projects</h3>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card">
+        <div class="proj-thumb solar">
+          <div class="proj-thumb-inner"><span>☀️</span><p>OFF-GRID DESIGN</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>Off-Grid Solar System Design</h4>
+          <p class="proj-problem">Designed a complete 3kW off-grid solar system for a rural household — panel sizing, battery bank, inverter selection, and wiring diagrams.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">PV Design</span>
+            <span class="tool-badge">Excel</span>
+            <span class="tool-badge">AutoCAD</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb solar">
+          <div class="proj-thumb-inner"><span>🔌</span><p>INVERTER SIM</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>Inverter Design Simulation (LTspice)</h4>
+          <p class="proj-problem">Simulated a single-phase inverter circuit to analyze waveform quality, switching losses, and efficiency under different load conditions.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">LTspice</span>
+            <span class="tool-badge">Circuit Design</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb solar">
+          <div class="proj-thumb-inner"><span>🔋</span><p>BATTERY DESIGN</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>Battery Storage Design Case Study</h4>
+          <p class="proj-problem">Created a load calculation and battery sizing case study for a small office setup, comparing lead-acid vs lithium-ion options.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">Excel</span>
+            <span class="tool-badge">Python</span>
+            <span class="tool-badge">Technical Report</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTOMATION PROJECTS -->
+  <div class="project-category fade-in">
+    <div class="cat-header">
+      <span class="cat-icon">🛠️</span>
+      <h3>Automation & Tools</h3>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card">
+        <div class="proj-thumb auto">
+          <div class="proj-thumb-inner"><span>📂</span><p>FILE AUTOMATION</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>File Organisation Automation</h4>
+          <p class="proj-problem">A Python script that automatically sorts downloaded files into folders by type (PDFs, images, code) — saving hours of manual sorting weekly.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">Python</span>
+            <span class="tool-badge">os</span>
+            <span class="tool-badge">shutil</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb auto">
+          <div class="proj-thumb-inner"><span>💬</span><p>CBO TRACKER</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>WhatsApp CBO Contribution Tracker</h4>
+          <p class="proj-problem">Designed a system concept for tracking member contributions in a CBO via WhatsApp messages, logging them to a spreadsheet automatically.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">Python</span>
+            <span class="tool-badge">WhatsApp API</span>
+            <span class="tool-badge">Google Sheets</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb auto">
+          <div class="proj-thumb-inner"><span>🔢</span><p>CALCULATOR</p></div>
+        </div>
+        <div class="proj-body">
+          <h4>Solar Load Calculator Tool</h4>
+          <p class="proj-problem">A Python CLI tool that takes household appliance inputs and calculates the recommended solar panel size, battery capacity, and inverter rating.</p>
+          <div class="proj-tools">
+            <span class="tool-badge">Python</span>
+            <span class="tool-badge">CLI</span>
+            <span class="tool-badge">Engineering</span>
+          </div>
+          <a href="https://github.com/Brett-KE" class="proj-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════ SKILLS ══════════════════════ -->
+<section id="skills">
+  <p class="section-label">Skills</p>
+  <h2 class="section-title">Technical Toolkit</h2>
+  <p class="section-sub">I offer a blend of software and hardware skills.</p>
+
+  <div class="skills-grid fade-in">
+    <div class="skill-group">
+      <div class="skill-group-head"><span>💻</span><h4>Programming & Data</h4></div>
+      <ul class="skill-list">
+        <li>Python <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+        <li>SQL <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+        <li>R <div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></li>
+        <li>Excel / VBA <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
+        <li>Tableau <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></li>
+        <li>Pandas / NumPy <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
+      </ul>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-head"><span>⚡</span><h4>Engineering</h4></div>
+      <ul class="skill-list">
+        <li>Solar PV System Design <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+        <li>Electrical Load Calculations <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></li>
+        <li>LTspice Simulation <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></li>
+        <li>Battery Systems <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
+        <li>Inverter Design <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></li>
+        <li>Wiring & Installations <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+      </ul>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-head"><span>🛠️</span><h4>Tools & Platforms</h4></div>
+      <ul class="skill-list">
+        <li>Git / GitHub <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+        <li>VS Code <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+        <li>Linux Basics <div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></li>
+        <li>Jupyter Notebooks <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
+        <li>Django / WordPress <div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></li>
+        <li>Technical Writing <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════ EXPERIENCE ══════════════════════ -->
+<section id="experience">
+  <p class="section-label">Experience</p>
+  <h2 class="section-title">Work & Contributions</h2>
+  <p class="section-sub">Hands-on work in the field and in the community.</p>
+
+  <div class="exp-grid fade-in">
+    <div class="exp-col">
+      <h3>⚡ Freelance Work</h3>
+      <div class="exp-item">
+        <div class="exp-date">2022 – PRESENT</div>
+        <h4>Solar PV Installations & Design</h4>
+        <p>Designed and installed multiple residential off-grid solar systems across Kenya. Handled site assessments, panel placement, battery bank wiring, and client handover documentation.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2021 – PRESENT</div>
+        <h4>Electrical Troubleshooting & Maintenance</h4>
+        <p>Provided electrical fault diagnosis and maintenance services for residential and small commercial clients. Includes switchboard work, wiring repairs, and safety audits.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2023 – PRESENT</div>
+        <h4>Python & Data Freelance Projects</h4>
+        <p>Delivered data cleaning pipelines, automation scripts, and dashboards for small businesses. Primarily sourced through direct referrals and online platforms.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2024 – PRESENT</div>
+        <h4>Technical Writing & Documentation</h4>
+        <p>Produced technical reports, system documentation, and instructional guides for engineering and software projects. Clients include small businesses and NGOs.</p>
+      </div>
+    </div>
+
+    <div class="exp-col">
+      <h3>🌍 Community Work</h3>
+      <div class="exp-item">
+        <div class="exp-date">2023 – PRESENT</div>
+        <h4>Excel Foundation CBO — Technical Contributor</h4>
+        <p>Active member and technical contributor of the Excel Foundation community-based organization. Helped design internal tracking systems, reporting templates, and contribute to community programs.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2023 – PRESENT</div>
+        <h4>Systems & Tools Development (CBO)</h4>
+        <p>Conceptualised and began building a WhatsApp-based contribution tracker for the CBO, enabling members to log and verify payments automatically — reducing manual admin work significantly.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2022 – 2023</div>
+        <h4>Community Energy Education</h4>
+        <p>Ran informal workshops on solar energy basics and energy-saving practices for local community members, helping households make informed decisions about energy solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════ BLOG ══════════════════════ -->
+<section id="blog">
+  <p class="section-label">Blog / Insights</p>
+  <h2 class="section-title">Thoughts & Lessons</h2>
+  <p class="section-sub">Sharing insights from my work and experiences.</p>
+
+  <div class="blog-grid fade-in">
+    <div class="blog-card">
+      <div class="blog-cat">Solar Engineering</div>
+      <h4>How I Designed a 5kVA Solar Backup System from Scratch</h4>
+      <p>A walkthrough of the design process — load calculations, panel and battery sizing, and the real decisions that go into a reliable off-grid setup in Kenya.</p>
+      <div class="blog-meta">
+        <span>Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-cat">Field Experience</div>
+      <h4>Lessons from Working in Solar Installations in Kenya</h4>
+      <p>The surprises, the setbacks, and the solutions. What the textbooks don't tell you about installing solar in real East African conditions.</p>
+      <div class="blog-meta">
+        <span>Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-cat">Python & Data</div>
+      <h4>Using Python for Data Cleaning in Real Projects</h4>
+      <p>Pandas techniques I actually use — handling nulls, fixing dtypes, deduplication — illustrated with examples from real messy datasets I've cleaned.</p>
+      <div class="blog-meta">
+        <span>Coming Soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════ CONTACT ══════════════════════ -->
+<section id="contact">
+  <div class="contact-inner fade-in">
+    <div class="contact-left">
+      <p class="section-label">Contact</p>
+      <h2>Let's Work<br><span>Together</span></h2>
+      <p>Open to remote gigs, freelance technical projects, AI/data annotation roles, and energy consulting work. Based in Kenya — available globally.</p>
+
+      <div class="contact-links">
+        <a href="mailto:masimebrett@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <div class="contact-link-text">
+            <h5>Email</h5>
+            <span>masimebrett@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/brettmasime" class="contact-link" target="_blank">
+          <div class="contact-link-icon">💼</div>
+          <div class="contact-link-text">
+            <h5>LinkedIn</h5>
+            <span>linkedin.com/in/brettmasime</span>
+          </div>
+        </a>
+        <a href="https://github.com/Brett-KE" class="contact-link" target="_blank">
+          <div class="contact-link-icon">🐙</div>
+          <div class="contact-link-text">
+            <h5>GitHub</h5>
+            <span>github.com/brettmasime</span>
+          </div>
+        </a>
+        <a href="https://wa.me/254728917078" class="contact-link" target="_blank">
+          <div class="contact-link-icon">📱</div>
+          <div class="contact-link-text">
+            <h5>WhatsApp</h5>
+            <span>+254 728 917 078 · Kenya 🇰🇪</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <div class="form-row">
+        <label>Your Name</label>
+        <input type="text" placeholder="Jane Doe">
+      </div>
+      <div class="form-row">
+        <label>Email Address</label>
+        <input type="email" placeholder="jane@example.com">
+      </div>
+      <div class="form-row">
+        <label>Subject</label>
+        <input type="text" placeholder="Project inquiry / Collaboration">
+      </div>
+      <div class="form-row">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your project or opportunity..."></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="alert('Form submission — connect to a backend or Formspree to activate.')">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Designed & built by <span>Brett Masime</span> · Kenya 🇰🇪 · 2025
+</footer>
+
+<script>
+  // Mobile menu
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Active nav link
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent1)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
